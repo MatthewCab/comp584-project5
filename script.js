@@ -1,3 +1,5 @@
+// for animation
+import { animate, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
 
 // Weatherbit API key
 const apiKey = "1a19d38705304dc89d5b2aa46cadda64";
@@ -121,3 +123,16 @@ searchButton.addEventListener("click", () => {
     get7DayForecast();
 });
 
+// color animation that is basically a breathing effect that shifts the color
+// hue from yellow to orange constantly
+animate('.row-1-item-1, .row-1-item-2, .row-2', {
+    backgroundColor: [
+        'rgba(219, 216, 0, 0.65)',
+        'rgba(252, 149, 32, 0.65)'
+    ],
+
+    duration: 2000,
+    delay: stagger(300),
+    loop: true,
+    alternate: true
+});

@@ -88,7 +88,7 @@ h1 {
 /* current weather bubble */
 .row-1-item-2 {
 	grid-column: span 1;
-	background-color: rgba(219, 216, 0, 0.65);
+    background-color: rgba(219, 216, 0, 0.65);
     padding: 20px;
     border-radius: 15px;
     min-height: 400px;
@@ -102,7 +102,7 @@ h1 {
 /* 7 day forecast bubble */
 .row-2{
 	grid-column: span 2;
-	background-color: rgba(219, 216, 0, 0.65);
+    background-color: rgba(219, 216, 0, 0.65);
     padding: 20px;
     border-radius: 15px;
     min-height: 400px;
