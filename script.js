@@ -7,19 +7,13 @@ const cityInput = document.getElementById("city");
 const searchButton = document.getElementById("search");
 const weatherDiv = document.getElementById("weather");
 const forecastDiv = document.getElementById("forecast");
-
+const weatherInfoDiv = document.getElementById("weatherInfo");
 
 // current weather function
 async function getCurrentWeather() {
 
     // Get the city entered by the user
     const city = cityInput.value.trim();
-
-    // if user tries to search without entering city
-    if (city === "") {
-        weatherDiv.textContent = "Enter a city.";
-        return;
-    }
 
     // API request
     const params = new URLSearchParams({
@@ -46,8 +40,8 @@ async function getCurrentWeather() {
         // Get the first weather observation
         const weather = data.data[0];
 
-        // weather information that will be displayed
-        weatherDiv.textContent =
+        // weather information that will be displayed using textContent
+        weatherInfoDiv.textContent =
             `City: ${weather.city_name}
 Temperature: ${weather.temp}°F
 Conditions: ${weather.weather.description}
@@ -57,24 +51,18 @@ Wind Speed: ${weather.wind_spd} mph`;
     }
     catch (error) {
         console.error(error);
-        weatherDiv.textContent = "Unable to retrieve weather information.";
+        weatherInfoDiv.textContent = "Unable to retrieve weather information.";
     }
 } // end getCurrentWeather()
 
 
 // next 7 days weather forecast function
-// same as getCurrentWeather except here you have to add a loop for the 
-// 7 days that you are gathering information about
+// same as getCurrentWeather except here you have obtain weather for
+// 7 days and separate the information for display
 async function get7DayForecast() {
 
     // Get the city entered by the user
     const city = cityInput.value.trim();
-
-    // if user tries to search without entering city
-    if (city === "") {
-        forecastDiv.textContent = "Please enter a city.";
-        return;
-    }
 
     // API request for 7 days
     const params = new URLSearchParams({
@@ -102,22 +90,15 @@ async function get7DayForecast() {
         // Clear the forecast (this is used when doing multiple searches)
         forecastDiv.innerHTML = "";
 
-        // Loop through the forecast data
-        for (let day of data.data) {
-
-            // Create description for each day
-            const forecastInfo = document.createElement("p");
-
-            // weather information that will be displayed
-            forecastInfo.textContent =
-                `Date: ${day.datetime}
-Temperature: ${day.temp}°F
-Conditions: ${day.weather.description}
-Humidity: ${day.rh}%`;
-
-            // Add description to forecast section
-            forecastDiv.appendChild(forecastInfo);
-        }
+        forecastDiv.innerHTML = data.data.map(day => `
+            <div class="forecast-day">
+                <h3>${day.valid_date}</h3>
+                <p>Temperature: ${day.temp}°F</p>
+                <p>Conditions:
+                ${day.weather.description}</p>
+                <p>Humidity: ${day.rh}%</p>
+            </div>
+        `).join("");
 
     }
     catch (error) {
@@ -129,6 +110,13 @@ Humidity: ${day.rh}%`;
 
 // display both current and 7 day forecast when user searches city 
 searchButton.addEventListener("click", () => {
+    // if search is empty and user trys to search
+    if(cityInput.value.trim() == ""){
+        weatherInfoDiv.textContent = "Enter a city.";
+        forecastDiv.textContent = "Enter a city";
+        return;
+    }
+
     getCurrentWeather();
     get7DayForecast();
 });

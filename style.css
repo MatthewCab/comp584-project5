@@ -1,6 +1,156 @@
-/* add 3 bubbles using grid */
-/* Search and current bubbles should be next to each other */
-/* 7 day forecast will be a long bubble underneath */
-/* One for the search button */
-/* One for the current weather information */
-/* One for the 7 day forecast */
+/*add animations*/
+/*animation when website loads (weather and 7 day forecast animate in)*/
+/*animation when search button is clicked*/
+/*animation when information is displayed*/
+
+/* Border box declaration 
+https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+html {
+  box-sizing: border-box;
+}
+/* inherit border-box on all elements in the universe and before and after
+ */
+*, 
+*:before, 
+*:after {
+  box-sizing: inherit;
+}
+
+/*added background image*/
+body {
+	font-family: Arial, Geneva, sans-serif;
+
+    background-image: url(background\ image.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+/* blur for bubbles so information is more legible
+   and so background isnt fully appearing through bubbles*/
+.row-1-item-1,
+.row-1-item-2,
+.row-2,
+.forecast-day {
+    backdrop-filter: blur(8px);
+}
+
+/*so info displays in a line by line layout*/
+#weatherInfo {
+    font-size: 20px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-auto-flow: row;
+	grid-gap: 15px;
+	width: 97%;
+	max-width: 1600px;
+	margin: 0 auto;
+}
+
+/* so titles dont display in grid bubbles*/
+h1 {
+    grid-column: span 2;
+}
+
+/* search button bubble */
+.row-1-item-1 {
+	grid-column: span 1;
+	background-color: rgba(219, 216, 0, 0.65);
+    padding: 20px;
+    border-radius: 15px;
+    min-height: 400px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+/* so button size and font are increased */
+#city {
+    width: 70%;
+    height: 45px;
+    font-size: 18px;
+    padding: 10px;
+}
+#search {
+    width: 70%;
+    height: 45px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* current weather bubble */
+.row-1-item-2 {
+	grid-column: span 1;
+	background-color: rgba(219, 216, 0, 0.65);
+    padding: 20px;
+    border-radius: 15px;
+    min-height: 400px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 7 day forecast bubble */
+.row-2{
+	grid-column: span 2;
+	background-color: rgba(219, 216, 0, 0.65);
+    padding: 20px;
+    border-radius: 15px;
+    min-height: 400px;
+}
+
+/* so each day displays in a new sub bubble */
+#forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+.forecast-day {
+    background-color: rgba(255, 243, 154, 0.65);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.forecast-day h3 {
+    font-size: 18px;
+}
+.forecast-day p {
+    margin: 10px 0;
+}
+
+/*tablet*/
+@media only screen and (max-width: 1000px) {
+    #forecast {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/*mobile*/
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+    h1 {
+        grid-column: span 1;
+    }
+    .row-1-item-1,
+    .row-1-item-2,
+    .row-2 {
+        grid-column: span 1;
+    }
+
+    #forecast {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
